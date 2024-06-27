@@ -4,7 +4,6 @@ import express from 'express'
 import { fileURLToPath } from 'node:url'
 import { dirname, join, resolve } from 'node:path'
 import bootstrap from './src/main.server'
-import { QueryClient, dehydrate } from '@ngneat/query'
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -32,24 +31,17 @@ export function app(): express.Express {
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req
-    const queryClient = new QueryClient()
 
     commonEngine
       .render({
-        bootstrap: bootstrap(queryClient),
+        bootstrap,
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
         providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
       })
       .then((html) => {
-        const queryState = JSON.stringify(dehydrate(queryClient))
-        html = html.replace(
-          '</body>',
-          `<script>window.__QUERY_STATE__ = ${queryState}</script></body>`,
-        )
         res.send(html)
-        queryClient.clear()
       })
       .catch((err) => next(err))
   })
