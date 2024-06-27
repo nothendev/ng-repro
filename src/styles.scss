@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply bg-background text-foreground w-full h-full;
+}
+
+#app {
+  @apply w-full h-full;
+}
+
+@layer base {
+  :root {
+    --background: var(--ctp-base);
+    --foreground: var(--ctp-text);
+
+    --muted: var(--ctp-overlay0);
+    --muted-foreground: var(--ctp-overlay1);
+
+    --popover: var(--ctp-mantle);
+    --popover-foreground: var(--ctp-text);
+
+    --border: var(--ctp-surface1);
+    --input: var(--ctp-surface1);
+
+    --card: var(--ctp-mantle);
+    --card-foreground: var(--ctp-text);
+
+    --primary: var(--ctp-mauve);
+    --primary-foreground: var(--ctp-base);
+
+    --secondary: var(--ctp-surface0);
+    --secondary-foreground: var(--ctp-text);
+
+    --accent: var(--ctp-base);
+    --accent-foreground: var(--ctp-text);
+
+    --success: var(--ctp-green);
+    --success-foreground: var(--ctp-crust);
+
+    --destructive: var(--ctp-red);
+    --destructive-foreground: var(--ctp-crust);
+
+    --ring: var(--ctp-text);
+    --radius: 0.5rem;
+  }
+}
+
+@layer utilities {
+  .hstack {
+    @apply flex flex-row items-center;
+  }
+
+  .vstack {
+    @apply flex flex-col;
+  }
+
+  .fullcenter {
+    @apply items-center justify-center;
+  }
+}
+
+.typog ol,
+ul {
+  @apply my-6 ml-6 list-disc [&>li]:mt-2;
+}
